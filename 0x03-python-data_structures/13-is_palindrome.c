@@ -1,83 +1,88 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include "lists.h"
+#include <stdio.h>
+void reverse(listint_t **head);
+int compare_lists(listint_t *head, listint_t *middle, int len);
 
 /**
-  * is_palindrome - Checks if a singly linked list is a palindrome
-  * @head: The head of the singly linked list
-  *
-  * Return: 0 if it is not a palindrome, 1 if it is a palindrome
-  */
+ * is_palindrome - Checks if a singly linked list is a palindrome.
+ * @head: Pointer to pointer of the first node in listint_t list.
+ * Return: 0 if not a palindrome, 1 if it is a palindrome.
+ */
 int is_palindrome(listint_t **head)
 {
-    listint_t *start = NULL, *end = NULL;
-    unsigned int i = 0, len = 0, len_cyc = 0, len_list = 0;
+	int len;
+	int i;
+	listint_t *tmp;
 
-    if (head == NULL)
-        return (0);
+	listint_t *middle;
 
-    if (*head == NULL)
-        return (1);
-    
-    start = *head;
-    len = listint_len(start);
-    len_cyc = len * 2;
-    len_list = len_cyc - 2;
-    end = *head;
+	if (head == NULL || *head == NULL)
+		return (1);
+	tmp = *head;
+	middle = *head;
 
-    for (; i < len_cyc; i = i + 2)
-    {
-        if (start[i].n != end[len_list].n)
-            return (0);
+	for (len = 0; tmp != NULL; len++)
+		tmp = tmp->next;
 
-        len_list = len_list - 2;
-    }
+	len = len / 2;
 
-    return (1);
+	for (i = 1; i < len; i++)
+		middle = middle->next;
+	if (len % 2 != 0 && len != 1)
+	{
+		middle = middle->next;
+		len = len - 1;
+	}
+	reverse(&middle);
+	i = compare_lists(*head, middle, len);
+
+	return (i);
 }
 
 /**
-  * get_nodeint_at_index - Gets a node from a linked list
-  * @head: The head of the linked list
-  * @index: The index to find in the linked list
-  *
-  * Return: The specific node of the linked list
-  */
-listint_t *get_nodeint_at_index(listint_t *head, unsigned int index)
+ * compare_lists - Compares two lists.
+ * @head: Pointer to the head node.
+ * @middle: Pointer to the middle node.
+ * @len: legth of the lists.
+ * Return: If the lists are the same 1. Otherwise 0.
+ */
+int compare_lists(listint_t *head, listint_t *middle, int len)
 {
-	listint_t *current = head;
-	unsigned int iter_times = 0;
+	int i;
 
-	if (head)
+	if (head == NULL || middle == NULL)
+		return (1);
+	for (i = 0; i < len; i++)
 	{
-		while (current != NULL)
-		{
-			if (iter_times == index)
-				return (current);
-
-			current = current->next;
-			++iter_times;
-		}
+		if (head->n != middle->n)
+			return (0);
+		head = head->next;
+		middle = middle->next;
 	}
-
-	return (NULL);
+	return (1);
 }
 
 /**
-  * slistint_len - Counts the number of elements in a linked list
-  * @h: The linked list to count
-  *
-  * Return: Number of elements in the linked list
-  */
-size_t listint_len(const listint_t *h)
+ * reverse - Reverses a linked list.
+ * @head: Pointer to the pointer of the head of a linked list.
+ */
+void reverse(listint_t **head)
 {
-	int lenght = 0;
+	listint_t *current;
+	listint_t *next;
+	listint_t *prev;
 
-	while (h != NULL)
+	if (head == NULL || *head == NULL)
+		return;
+
+	prev = NULL;
+	current = *head;
+	while (current != NULL)
 	{
-		++lenght;
-		h = h->next;
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
 	}
-
-	return (lenght);
+	*head = prev;
 }
