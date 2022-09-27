@@ -1,34 +1,28 @@
 #!/usr/bin/python3
-"""
-Contains the clas "Student"
-"""
+"""Module implementing class with method to serialize itself"""
 
 
 class Student:
-    """Representation of a student"""
+    """Class to represent student"""
     def __init__(self, first_name, last_name, age):
-        """Initializes the student"""
+        """Initialize new student instance with name and age"""
         self.first_name = first_name
         self.last_name = last_name
         self.age = age
 
     def to_json(self, attrs=None):
-        """returns a dictionary representation of a Student instance
-        with specified attributes"""
-        if attrs is None:
-            return self.__dict__
-        new_dict = {}
-        for a in attrs:
-            try:
-                new_dict[a] = self.__dict__[a]
-            except:
-                pass
-        return new_dict
+        """Create copy of attributes for use in json string
+        If `attrs` is not None, use `attrs` list to select desired attributes.
+        """
+        if attrs is None or not isinstance(attrs, (list, tuple)):
+            return self.__dict__.copy()
+        else:
+            ret = {k: v for k, v in filter(lambda x: x[0] in attrs,
+                                           self.__dict__.items())}
+            return ret
 
     def reload_from_json(self, json):
-        """replaces all attributes of the Student instance"""
-        for key in json:
-            try:
-                setattr(self, key, json[key])
-            except:
-                pass
+        """Use serialized version of `Student` instance to update `self`
+        Recreate instance from previously serialized `Student` instance.
+        """
+        self.__dict__.update(json)
