@@ -1,10 +1,13 @@
 #!/usr/bin/python3
-"""
-Contains the function "append_wrtie"
-"""
+"""Module to write text to a file"""
 
 
-def append_write(filename="", text=""):
-    """returns the number of chars appended to "filename" from "text" """
-    with open(filename, 'a', encoding='utf=8') as f:
+def write_file(filename="", text=""):
+    """Write `text` to `filename`
+    Args:
+        filename (str): file to write to
+        text (str): text to write into `filename`
+    Returns: number of characters written
+    """
+    with open(filename, 'w', encoding='utf8') as f:
         return f.write(text)
