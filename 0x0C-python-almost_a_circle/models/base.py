@@ -66,7 +66,6 @@ class Base:
         except:
             pass
         return l
-<<<<<<< HEAD
 
     @classmethod
     def save_to_file_csv(cls, list_objs):
@@ -105,5 +104,3 @@ class Base:
         except:
             pass
         return l
-=======
->>>>>>> 85cba64bc269e02d5bc0f504bfa2740d1c8b3eb0
