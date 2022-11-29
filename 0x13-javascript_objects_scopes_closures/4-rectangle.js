@@ -15,12 +15,14 @@ class Rectangle {
         myVar += 'X';
         y++;
       }
+	    i
       console.log(myVar);
     }
   }
 
   rotate () {
-    let tmp = this.width;
+    let tmp = 0;
+    tmp = this.width;
     this.width = this.height;
     this.height = tmp;
   }
