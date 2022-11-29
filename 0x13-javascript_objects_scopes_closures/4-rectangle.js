@@ -15,7 +15,7 @@ class Rectangle {
         myVar += 'X';
         y++;
       }
-	    i
+
       console.log(myVar);
     }
   }
