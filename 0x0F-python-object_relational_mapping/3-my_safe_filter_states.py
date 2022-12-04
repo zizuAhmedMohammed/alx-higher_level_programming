@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-Script to display all rows of states table
-where name matches argument
+SQL injection safe query to get rows of states where name matches
+an argument.
 """
 
 import MySQLdb
