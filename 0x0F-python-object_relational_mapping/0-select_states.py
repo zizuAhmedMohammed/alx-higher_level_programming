@@ -2,7 +2,7 @@
 """Script to select all states from database `hbtn_0e_0_usa`"""
 
 import MySQLdb
-import sys import argv
+from sys import argv
 
 if __name__ = '__main__':
     db = MySQLdb.connect(
