@@ -1,29 +1,27 @@
 #!/usr/bin/python3
-""" The letter must be sent in the variable q
--If no argument is given, set q=""
--If the response body is properly JSON formatted and not empty, display the id and name like this: [<id>] <name>
--Otherwise:
--Display Not a valid JSON if the JSON is invalid
--Display No result if the JSON is empty
 """
-import sys
+Python script that sends a POST request to the URL and
+to an URL with the letter as a parameter
+"""
 import requests
+import sys
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        parameter = {'q': sys.argv[1] }
-    else:
-        parameter = {'q': '' }
+    data = {'q': ""}
 
-    url = 'http://0.0.0.0:5000/search_user'
-    R = requests.post(url, data = parameter )
     try:
-        response = R.json()
-        if response == {}:
+        data['q'] = sys.argv[1]
+    except:
+        pass
+
+    r = requests.post('http://0.0.0.0:5000/search_user', data)
+
+    try:
+        json_o = r.json()
+        if not json_o:
             print("No result")
         else:
-            print(f"[{response.get('id')}] {response.get('name')}")
-
-    except ValueError:
+            print("[{}] {}".format(json_o.get('id'), json_o.get('name')))
+    except:
         print("Not a valid JSON")
